@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        someImageLoader = CustomVolleyRequestQueue.getInstance(this.getApplicationContext()).getImageLoader();
+        //someImageLoader = CustomVolleyRequestQueue.getInstance(this.getApplicationContext()).getImageLoader();
         //Image URL - This can point to any image file supported by Android
 //        final String url = "http://goo.gl/0rkaBz";
         //someImageLoader.get(url1, ImageLoader.getImageListener(someNetworkImageView, R.mipmap.icon_user_default, android.R.drawable.ic_dialog_alert));
