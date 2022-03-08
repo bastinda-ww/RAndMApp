@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/andre/Documents/AndroidProjacts/Git/RAndMApp/app/src/main/res/layout/activity_description_of_character.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/andre/Documents/AndroidProjacts/Git/RAndMApp/app/src/main/res/layout/activity_description_of_character.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/andre/Documents/AndroidProjacts/Git/RAndMApp/app/src/main/res/layout/activity_list_of_epesodes.xml" value="0.2" />
+        <entry key="..\:/Users/andre/Documents/AndroidProjacts/Git/RAndMApp/app/src/main/res/layout/activity_list_of_episodes.xml" value="0.165625" />
         <entry key="..\:/Users/andre/Documents/AndroidProjacts/Git/RAndMApp/app/src/main/res/layout/activity_main.xml" value="0.11822916666666666" />
         <entry key="..\:/Users/andre/Documents/AndroidProjacts/Git/RAndMApp/app/src/main/res/layout/item_of_character.xml" value="0.1" />
         <entry key="..\:/Users/andre/Documents/AndroidProjacts/Git/RAndMApp/app/src/main/res/layout/item_of_page.xml" value="0.1" />

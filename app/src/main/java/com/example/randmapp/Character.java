@@ -9,16 +9,14 @@ public class Character {
     private String species;
     private Location location;
     private String imageURL;
-    private ImageLoader imageLoader;
 
-    public Character(int id, String name, String status, String species, Location location, String imageURL, ImageLoader imageLoader) {
+    public Character(int id, String name, String status, String species, Location location, String imageURL) {
         this.id = id;
         this.name = name;
         this.status = status;
         this.species = species;
         this.location = location;
         this.imageURL = imageURL;
-        this.imageLoader = imageLoader;
     }
 
     public int getId() {
@@ -69,11 +67,4 @@ public class Character {
         this.imageURL = image;
     }
 
-    public ImageLoader getImageLoader() {
-        return imageLoader;
-    }
-
-    public void setImageLoader(ImageLoader imageLoader) {
-        this.imageLoader = imageLoader;
-    }
 }
