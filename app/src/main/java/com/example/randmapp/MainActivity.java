@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private PageAdapter pageAdapter;
     private int countOfPage = 10;
     String url1 = "https://rickandmortyapi.com/api/character/avatar/1.jpeg";
-    private List<Character> listOfCharacter = new ArrayList<>();
+    private ArrayList<Character> listOfCharacter = new ArrayList<>();
 
 
     @Override

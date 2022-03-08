@@ -16,16 +16,12 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.CharacterViewHolder> {
-    private String[] name;
-    private String[] image;
     private List<Character> listOfCharacter;
 
-    private int countOfHolders;
     private ViewGroup parent;
 
     public CharacterAdapter(List<Character> listOfCharacter) {
         this.listOfCharacter = listOfCharacter;
-        countOfHolders = listOfCharacter.size();
     }
 
     @NonNull
@@ -47,7 +43,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
 
     @Override
     public int getItemCount() {
-        return countOfHolders;
+        return listOfCharacter.size();
     }
 
     class CharacterViewHolder extends RecyclerView.ViewHolder {
