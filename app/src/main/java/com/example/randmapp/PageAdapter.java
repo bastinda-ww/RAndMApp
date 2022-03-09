@@ -11,12 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class PageAdapter extends RecyclerView.Adapter<PageAdapter.PageViewHolder> {
     private int countOfPage;
-    private int counter;
+    //private int counter;
     private ViewGroup parent;
 
     public PageAdapter(int countOfPage) {
         this.countOfPage = countOfPage;
-        counter = 0;
     }
 
     @NonNull
@@ -27,15 +26,12 @@ public class PageAdapter extends RecyclerView.Adapter<PageAdapter.PageViewHolder
         int layoutIdForItemPage = R.layout.item_of_page;
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(layoutIdForItemPage, parent, false);
-        PageViewHolder pageViewHolder = new PageViewHolder(view);
-        pageViewHolder.numberOfPage.setText(counter);
-        counter++;
-        return pageViewHolder;
+        return (new PageViewHolder(view));
     }
 
     @Override
     public void onBindViewHolder(@NonNull PageAdapter.PageViewHolder holder, int position) {
-        holder.bind();
+        holder.bind(position + 1);
     }
 
     @Override
@@ -49,10 +45,17 @@ public class PageAdapter extends RecyclerView.Adapter<PageAdapter.PageViewHolder
         public PageViewHolder(@NonNull View itemView) {
             super(itemView);
             numberOfPage = itemView.findViewById(R.id.numberOfPage);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
         }
 
-        public void bind() {
-            numberOfPage.setText(counter);
+        public void bind(int counter) {
+            numberOfPage.setText(String.valueOf(counter));
 
         }
     }

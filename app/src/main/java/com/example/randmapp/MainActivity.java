@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView pageList;
     private CharacterAdapter characterAdapter;
     private PageAdapter pageAdapter;
-    private int countOfPage = 10;
+    //private int countOfPage = 10;
     String url1 = "https://rickandmortyapi.com/api/character/avatar/1.jpeg";
     private ArrayList<Character> listOfCharacter = new ArrayList<>();
 
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
 
         Location someLocation = new Location(1, "Samara");
-        Character character0 = new Character(1, "Igor", "alive", "human", someLocation, "https://rickandmortyapi.com/api/character/avatar/1.jpeg");
+        Character character0 = new Character(1, "Igor", "alive", "human", new Location(1, "Vitebsk"), "https://rickandmortyapi.com/api/character/avatar/1.jpeg");
         Character character1 = new Character(2, "Andrey", "alive", "human", someLocation, "URL");
         Character character2 = new Character(3, "Max", "alive", "human", someLocation, "URL");
         Character character3 = new Character(4, "Factor", "unknown", "human", someLocation, "https://rickandmortyapi.com/api/character/avatar/2.jpeg");
@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
         characterAdapter = new CharacterAdapter(listOfCharacter);
         characterList.setAdapter(characterAdapter);
-        pageAdapter = new PageAdapter(countOfPage);
+        pageAdapter = new PageAdapter(10);
+        pageList.setAdapter(pageAdapter);
     }
 }

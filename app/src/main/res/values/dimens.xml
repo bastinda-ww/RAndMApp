@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="shr_product_card_image_height">108dp</dimen>
+    <dimen name="shr_product_card_image_height">120dp</dimen>
 
     <!-- Dimens for staggered asymmetric grid layout cards-->
 </resources>
