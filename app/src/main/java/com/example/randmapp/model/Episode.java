@@ -1,4 +1,4 @@
-package com.example.randmapp;
+package com.example.randmapp.model;
 
 public class Episode {
     private int id;

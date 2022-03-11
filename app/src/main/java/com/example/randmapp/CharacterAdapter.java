@@ -11,16 +11,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.randmapp.model.Character;
+import com.example.randmapp.model.Result;
 import com.squareup.picasso.Picasso;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.CharacterViewHolder> {
-    private List<Character> listOfCharacter;
+    private List<Result> listOfCharacter;
 
     private ViewGroup parent;
 
-    public CharacterAdapter(List<Character> listOfCharacter) {
+    public CharacterAdapter(List<Result> listOfCharacter) {
         this.listOfCharacter = listOfCharacter;
     }
 
@@ -43,6 +46,8 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
 
     @Override
     public int getItemCount() {
+        if (listOfCharacter == null)
+            return 0;
         return listOfCharacter.size();
     }
 
@@ -66,9 +71,9 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
             });
         }
 
-        void bind(Character character) {
+        void bind(Result character) {
             nameItemCharacter.setText(character.getName());
-            Picasso.with(context).load(character.getImageURL()).into(imageItemCharacter);
+            Picasso.with(context).load(character.getImage()).into(imageItemCharacter);
 
         }
     }

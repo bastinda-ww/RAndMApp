@@ -1,6 +1,4 @@
-package com.example.randmapp;
-
-import com.android.volley.toolbox.ImageLoader;
+package com.example.randmapp.model;
 
 public class Character {
     private int id;
