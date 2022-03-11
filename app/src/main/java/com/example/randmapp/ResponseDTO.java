@@ -9,16 +9,16 @@ import java.util.List;
 public class ResponseDTO {
     @SerializedName("info")
     @Expose
-    private Object info;
+    private Info info;
     @SerializedName("results")
     @Expose
     private List<Result> results;
 
-    public Object getInfo() {
+    public Info getInfo() {
         return info;
     }
 
-    public void setInfo(Object info) {
+    public void setInfo(Info info) {
         this.info = info;
     }
 

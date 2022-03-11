@@ -5,22 +5,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.randmapp.api.CharacterAPI;
-import com.example.randmapp.model.Result;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.example.randmapp.MainActivity.characterList;
-import static com.example.randmapp.MainActivity.pageList;
+import static com.example.randmapp.MainActivity.characterRecyclerView;
+import static com.example.randmapp.MainActivity.pageRecyclerView;
 import static com.example.randmapp.MainActivity.listOfCharacter;
 import static com.example.randmapp.MainActivity.characterAdapter;
 import static com.example.randmapp.MainActivity.pageAdapter;
@@ -30,31 +26,30 @@ public class PageAdapter extends RecyclerView.Adapter<PageAdapter.PageViewHolder
     private int page;
     private ViewGroup parent;
 
-    private final CharacterAPI characterAPI = RestService.getCharacters();
+//    private final CharacterAPI characterAPI = RestService.getCharacters();
     ;
 
-    private void loadData(int page) {
-
-        characterAPI.getCharacters(page).enqueue(new Callback<ResponseDTO>() {
-            @Override
-            public void onResponse(Call<ResponseDTO> call, Response<ResponseDTO> response) {
-                if (response.isSuccessful()) {
-                    listOfCharacter = response.body().getResults();
-                    characterAdapter = new CharacterAdapter(listOfCharacter);
-                    characterList.setAdapter(characterAdapter);
-                    pageAdapter = new PageAdapter(10);
-                    pageList.setAdapter(pageAdapter);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseDTO> call, Throwable t) {
-                System.out.println("Throwable " + t);
-            }
-        });
-
-    }
-
+//    private void loadData(int page) {
+//
+//        characterAPI.getCharacters(page).enqueue(new Callback<ResponseDTO>() {
+//            @Override
+//            public void onResponse(Call<ResponseDTO> call, Response<ResponseDTO> response) {
+//                if (response.isSuccessful()) {
+//                    listOfCharacter = response.body().getResults();
+//                    characterAdapter = new CharacterAdapter(listOfCharacter);
+//                    characterRecyclerView.setAdapter(characterAdapter);
+//                    pageAdapter = new PageAdapter(10);
+//                    pageRecyclerView.setAdapter(pageAdapter);
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseDTO> call, Throwable t) {
+//                System.out.println("Throwable " + t);
+//            }
+//        });
+//
+//    }
 
     public PageAdapter(int countOfPage) {
         this.countOfPage = countOfPage;
@@ -92,7 +87,7 @@ public class PageAdapter extends RecyclerView.Adapter<PageAdapter.PageViewHolder
                 @Override
                 public void onClick(View view) {
                     //get new list of character from API and show it
-                    loadData(5);
+                    //loadData(5);
 
                 }
             });
@@ -103,4 +98,6 @@ public class PageAdapter extends RecyclerView.Adapter<PageAdapter.PageViewHolder
 
         }
     }
+
+
 }
