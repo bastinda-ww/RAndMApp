@@ -9,31 +9,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.randmapp.api.CharacterAPI;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import static com.example.randmapp.MainActivity.characterRecyclerView;
-import static com.example.randmapp.MainActivity.pageRecyclerView;
-import static com.example.randmapp.MainActivity.listOfCharacter;
-import static com.example.randmapp.MainActivity.characterAdapter;
-import static com.example.randmapp.MainActivity.pageAdapter;
-
 public class PageAdapter extends RecyclerView.Adapter<PageAdapter.PageViewHolder> {
     private int countOfPage;
     private int page;
     private ViewGroup parent;
 
-//    private final CharacterAPI characterAPI = RestService.getCharacters();
-    ;
-
+//    private final API characterAPI = RestService.getData();
 //    private void loadData(int page) {
-//
-//        characterAPI.getCharacters(page).enqueue(new Callback<ResponseDTO>() {
+//        characterAPI.getData(page).enqueue(new Callback<ResponseCharactersDTO>() {
 //            @Override
-//            public void onResponse(Call<ResponseDTO> call, Response<ResponseDTO> response) {
+//            public void onResponse(Call<ResponseCharactersDTO> call, Response<ResponseCharactersDTO> response) {
 //                if (response.isSuccessful()) {
 //                    listOfCharacter = response.body().getResults();
 //                    characterAdapter = new CharacterAdapter(listOfCharacter);
@@ -44,11 +29,10 @@ public class PageAdapter extends RecyclerView.Adapter<PageAdapter.PageViewHolder
 //            }
 //
 //            @Override
-//            public void onFailure(Call<ResponseDTO> call, Throwable t) {
+//            public void onFailure(Call<ResponseCharactersDTO> call, Throwable t) {
 //                System.out.println("Throwable " + t);
 //            }
 //        });
-//
 //    }
 
     public PageAdapter(int countOfPage) {

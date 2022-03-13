@@ -1,6 +1,5 @@
 package com.example.randmapp;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,21 +11,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.randmapp.model.Episode;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class EpisodeAdapter extends RecyclerView.Adapter<EpisodeAdapter.EpisodeViewHolder> {
 
-    private ArrayList<Episode> listOfEpisode;
-    private Context context;
+    private List<Episode> listOfEpisode;
 
-    public EpisodeAdapter(ArrayList<Episode> listOfEpisode, Context context) {
+
+    public EpisodeAdapter(List<Episode> listOfEpisode) {
         this.listOfEpisode = listOfEpisode;
-        this.context = context;
     }
 
     // method for filtering our recyclerview items.
-    public void filterList(ArrayList<Episode> filterListOfEpisode) {
-        // below line is to add our filtered
-        // list in our course array list.
+    public void filterList(List<Episode> filterListOfEpisode) {
+
         listOfEpisode = filterListOfEpisode;
         // below line is to notify our adapter
         // as change in recycler view data.
@@ -43,9 +41,8 @@ public class EpisodeAdapter extends RecyclerView.Adapter<EpisodeAdapter.EpisodeV
 
     @Override
     public void onBindViewHolder(@NonNull EpisodeViewHolder holder, int position) {
-        Episode episode = listOfEpisode.get(position);
-        holder.nameOfEpisode.setText(episode.getName());
-        holder.airDateOfEpisode.setText(episode.getAirDate());
+        holder.nameOfEpisode.setText(listOfEpisode.get(position).getName());
+        holder.airDateOfEpisode.setText(listOfEpisode.get(position).getAirDate());
 
     }
 
@@ -64,4 +61,5 @@ public class EpisodeAdapter extends RecyclerView.Adapter<EpisodeAdapter.EpisodeV
             airDateOfEpisode = itemView.findViewById(R.id.airDateOfEpisode);
         }
     }
+
 }

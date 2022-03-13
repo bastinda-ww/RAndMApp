@@ -1,15 +1,26 @@
 package com.example.randmapp.model;
 
-public class Episode {
-    private int id;
-    private String name;
-    private String airDate;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-    public Episode(int id, String name, String airDate) {
-        this.id = id;
-        this.name = name;
-        this.airDate = airDate;
-    }
+import java.util.List;
+
+public class Episode {
+    @SerializedName("id")
+    @Expose
+    private int id;
+    @SerializedName("name")
+    @Expose
+    private String name;
+    @SerializedName("air_date")
+    @Expose
+    private String airDate;
+    @SerializedName("episode")
+    @Expose
+    private String episode;
+    @SerializedName("characters")
+    @Expose
+    private List<String> characters;
 
     public int getId() {
         return id;
@@ -33,5 +44,21 @@ public class Episode {
 
     public void setAirDate(String airDate) {
         this.airDate = airDate;
+    }
+
+    public String getEpisode() {
+        return episode;
+    }
+
+    public void setEpisode(String episode) {
+        this.episode = episode;
+    }
+
+    public List<String> getCharacters() {
+        return characters;
+    }
+
+    public void setCharacters(List<String> characters) {
+        this.characters = characters;
     }
 }

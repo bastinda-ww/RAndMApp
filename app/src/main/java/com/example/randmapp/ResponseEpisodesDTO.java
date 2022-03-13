@@ -1,18 +1,18 @@
 package com.example.randmapp;
 
-import com.example.randmapp.model.Result;
+import com.example.randmapp.model.Episode;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class ResponseDTO {
+public class ResponseEpisodesDTO {
     @SerializedName("info")
     @Expose
     private Info info;
     @SerializedName("results")
     @Expose
-    private List<Result> results;
+    private List<Episode> results;
 
     public Info getInfo() {
         return info;
@@ -22,11 +22,11 @@ public class ResponseDTO {
         this.info = info;
     }
 
-    public List<Result> getResults() {
+    public List<Episode> getEpisodes() {
         return results;
     }
 
-    public void setResults(List<Result> results) {
+    public void setEpisodes(List<Episode> results) {
         this.results = results;
     }
 }

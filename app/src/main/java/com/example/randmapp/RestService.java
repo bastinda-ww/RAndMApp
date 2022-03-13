@@ -1,6 +1,6 @@
 package com.example.randmapp;
 
-import com.example.randmapp.api.CharacterAPI;
+import com.example.randmapp.api.API;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RestService {
     static final String BASE_URL = "https://rickandmortyapi.com/";
 
-    public static CharacterAPI getCharacters() {
+    public static API getData() {
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
@@ -21,8 +21,8 @@ public class RestService {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
-        CharacterAPI characterAPI = retrofit.create(CharacterAPI.class);
-        return characterAPI;
+        API api = retrofit.create(API.class);
+        return api;
 
     }
 }

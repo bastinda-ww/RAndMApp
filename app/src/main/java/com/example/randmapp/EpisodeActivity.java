@@ -14,23 +14,47 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.randmapp.api.API;
 import com.example.randmapp.model.Episode;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class EpisodeActivity extends AppCompatActivity {
     private RecyclerView episodeRecyclerView;
     private EpisodeAdapter episodeAdapter;
     private Button toCharacterActivity;
-    private ArrayList<Episode> episodeArrayList;
+    private List<Episode> episodeArrayList;
+    private API episodeAPI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_of_episodes);
-        episodeRecyclerView = findViewById(R.id.episodeRecyclerView);
         toCharacterActivity = findViewById(R.id.toCharacterActivity);
-        buildRecyclerView();
+
+        initRecyclerView();
+
+        episodeAPI = RestService.getData();
+        episodeAPI.getEpisodes(1).enqueue(new Callback<ResponseEpisodesDTO>() {
+            @Override
+            public void onResponse(Call<ResponseEpisodesDTO> call, Response<ResponseEpisodesDTO> response) {
+                if (response.isSuccessful()) {
+                    episodeArrayList = response.body().getEpisodes();
+                    episodeAdapter = new EpisodeAdapter(episodeArrayList);
+                    episodeRecyclerView.setAdapter(episodeAdapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseEpisodesDTO> call, Throwable throwable) {
+                System.out.println("Throwable " + throwable);
+            }
+        });
     }
 
     @Override
@@ -76,7 +100,7 @@ public class EpisodeActivity extends AppCompatActivity {
 
     private void filter(String text) {
         // creating a new array list to filter our data.
-        ArrayList<Episode> filteredlist = new ArrayList<>();
+        List<Episode> filteredlist = new ArrayList<>();
 
         // running a for loop to compare elements.
         for (Episode item : episodeArrayList) {
@@ -98,41 +122,28 @@ public class EpisodeActivity extends AppCompatActivity {
         }
     }
 
-    private void buildRecyclerView() {
-
-        // below line we are creating a new array list
-        episodeArrayList = new ArrayList<>();
+    private void initRecyclerView() {
 
         // below line is to add data to our array list.
-        episodeArrayList.add(new Episode(1, "20 minute's adventure", "10.10.2020"));
-        episodeArrayList.add(new Episode(2, "first Ep.", "10.10.2022"));
-        episodeArrayList.add(new Episode(3, "second Ep.", "10.03.2021"));
-        episodeArrayList.add(new Episode(4, "Self Paced Course", "01.12.2020"));
-        episodeArrayList.add(new Episode(5, "third Ep.", "08.10.2020"));
-        episodeArrayList.add(new Episode(6, "The end of the Citadel", "31.01.2020"));
-        episodeArrayList.add(new Episode(7, "my favorite Ep.", "31.01.2020"));
-        episodeArrayList.add(new Episode(8, "DSA Self Paced Course", "10.12.2020"));
-        episodeArrayList.add(new Episode(9, "DSA d Course", "10.12.2020"));
-        episodeArrayList.add(new Episode(10, "DSA Self Paced Course", "10.12.2020"));
-        episodeArrayList.add(new Episode(11, "D Selrse", "10.12.2020"));
-        episodeArrayList.add(new Episode(12, "DSA SePaced Course", "10.12.2020"));
-        episodeArrayList.add(new Episode(13, " Self Paced Course", "10.12.2020"));
-        episodeArrayList.add(new Episode(14, "Paced Course", "10.12.2020"));
-        episodeArrayList.add(new Episode(15, "Self", "10.12.2020"));
+//        episodeArrayList.add(new Episode(1, "20 minute's adventure", "10.10.2020"));
+//        episodeArrayList.add(new Episode(2, "first Ep.", "10.10.2022"));
+//        episodeArrayList.add(new Episode(3, "second Ep.", "10.03.2021"));
+//        episodeArrayList.add(new Episode(4, "Self Paced Course", "01.12.2020"));
+//        episodeArrayList.add(new Episode(5, "third Ep.", "08.10.2020"));
+//        episodeArrayList.add(new Episode(6, "The end of the Citadel", "31.01.2020"));
+//        episodeArrayList.add(new Episode(7, "my favorite Ep.", "31.01.2020"));
+//        episodeArrayList.add(new Episode(8, "DSA Self Paced Course", "10.12.2020"));
+//        episodeArrayList.add(new Episode(9, "DSA d Course", "10.12.2020"));
+//        episodeArrayList.add(new Episode(10, "DSA Self Paced Course", "10.12.2020"));
+//        episodeArrayList.add(new Episode(11, "D Selrse", "10.12.2020"));
+//        episodeArrayList.add(new Episode(12, "DSA SePaced Course", "10.12.2020"));
+//        episodeArrayList.add(new Episode(13, " Self Paced Course", "10.12.2020"));
+//        episodeArrayList.add(new Episode(14, "Paced Course", "10.12.2020"));
+//        episodeArrayList.add(new Episode(15, "Self", "10.12.2020"));
 
-        // initializing our adapter class.
-        episodeAdapter = new EpisodeAdapter(episodeArrayList, EpisodeActivity.this);
-
-        // adding layout manager to our recycler view.
+        episodeRecyclerView = findViewById(R.id.episodeRecyclerView);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         episodeRecyclerView.setHasFixedSize(true);
-
-        // setting layout manager
-        // to our recycler view.
         episodeRecyclerView.setLayoutManager(manager);
-
-        // setting adapter to
-        // our recycler view.
-        episodeRecyclerView.setAdapter(episodeAdapter);
     }
 }

@@ -11,18 +11,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.randmapp.model.Result;
+import com.example.randmapp.model.Character;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.CharacterViewHolder> {
-    private List<Result> listOfCharacter;
+    private List<Character> listOfCharacter;
 
     private ViewGroup parent;
+    private OnCharacterClickListener onCharacterClickListener;
 
-    public CharacterAdapter(List<Result> listOfCharacter) {
+    public CharacterAdapter(List<Character> listOfCharacter, OnCharacterClickListener onCharacterClickListener) {
         this.listOfCharacter = listOfCharacter;
+        this.onCharacterClickListener = onCharacterClickListener;
     }
 
     @NonNull
@@ -61,19 +63,23 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
             imageItemCharacter = itemView.findViewById(R.id.characterImage);
             this.context = context;
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    parent.getContext().startActivity(new Intent(parent.getContext(), DescriptionActivity.class));
-                }
-            });
+//            itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    parent.getContext().startActivity(new Intent(parent.getContext(), DescriptionActivity.class));
+//                }
+//            });
         }
 
-        void bind(Result character) {
+        void bind(Character character) {
             nameItemCharacter.setText(character.getName());
             Picasso.with(context).load(character.getImage()).into(imageItemCharacter);
 
         }
+    }
+
+    public interface OnCharacterClickListener {
+        void onCharacterClick(Character character);
     }
 }
 
