@@ -39,22 +39,22 @@ public class EpisodeActivity extends AppCompatActivity {
 
         initRecyclerView();
 
-        episodeAPI = RestService.getData();
-        episodeAPI.getEpisodes(1).enqueue(new Callback<ResponseEpisodesDTO>() {
-            @Override
-            public void onResponse(Call<ResponseEpisodesDTO> call, Response<ResponseEpisodesDTO> response) {
-                if (response.isSuccessful()) {
-                    episodeArrayList = response.body().getEpisodes();
-                    episodeAdapter = new EpisodeAdapter(episodeArrayList);
-                    episodeRecyclerView.setAdapter(episodeAdapter);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseEpisodesDTO> call, Throwable throwable) {
-                System.out.println("Throwable " + throwable);
-            }
-        });
+//        episodeAPI = RestService.getData();
+//        episodeAPI.getEpisodes(1).enqueue(new Callback<ResponseEpisodesDTO>() {
+//            @Override
+//            public void onResponse(Call<ResponseEpisodesDTO> call, Response<ResponseEpisodesDTO> response) {
+//                if (response.isSuccessful()) {
+//                    episodeArrayList = response.body().getEpisodes();
+//                    episodeAdapter = new EpisodeAdapter(episodeArrayList);
+//                    episodeRecyclerView.setAdapter(episodeAdapter);
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseEpisodesDTO> call, Throwable throwable) {
+//                System.out.println("Throwable " + throwable);
+//            }
+//        });
     }
 
     @Override

@@ -59,16 +59,17 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
 
         public CharacterViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
+            this.context = context;
             nameItemCharacter = itemView.findViewById(R.id.charName);
             imageItemCharacter = itemView.findViewById(R.id.characterImage);
-            this.context = context;
 
-//            itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    parent.getContext().startActivity(new Intent(parent.getContext(), DescriptionActivity.class));
-//                }
-//            });
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Character character = listOfCharacter.get(getLayoutPosition());
+                    onCharacterClickListener.onCharacterClick(character);
+                }
+            });
         }
 
         void bind(Character character) {

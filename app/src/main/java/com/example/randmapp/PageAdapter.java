@@ -10,9 +10,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class PageAdapter extends RecyclerView.Adapter<PageAdapter.PageViewHolder> {
-    private int countOfPage;
+    private int numberOfPage;
     private int page;
     private ViewGroup parent;
+    private OnPageClickListener onPageClickListener;
 
 //    private final API characterAPI = RestService.getData();
 //    private void loadData(int page) {
@@ -35,8 +36,9 @@ public class PageAdapter extends RecyclerView.Adapter<PageAdapter.PageViewHolder
 //        });
 //    }
 
-    public PageAdapter(int countOfPage) {
-        this.countOfPage = countOfPage;
+    public PageAdapter(int numberOfPage, OnPageClickListener onPageClickListener) {
+        this.numberOfPage = numberOfPage;
+        this.onPageClickListener = onPageClickListener;
     }
 
     @NonNull
@@ -57,7 +59,7 @@ public class PageAdapter extends RecyclerView.Adapter<PageAdapter.PageViewHolder
 
     @Override
     public int getItemCount() {
-        return countOfPage;
+        return numberOfPage;
     }
 
     class PageViewHolder extends RecyclerView.ViewHolder {
@@ -70,18 +72,19 @@ public class PageAdapter extends RecyclerView.Adapter<PageAdapter.PageViewHolder
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //get new list of character from API and show it
-                    //loadData(5);
-
+                    int page = getLayoutPosition();
+                    onPageClickListener.onPageClick(page + 1);
                 }
             });
         }
 
         public void bind(int counter) {
             numberOfPage.setText(String.valueOf(counter));
-
         }
     }
 
+    public interface OnPageClickListener {
+        void onPageClick(int page);
+    }
 
 }

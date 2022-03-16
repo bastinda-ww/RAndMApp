@@ -5,12 +5,14 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import com.example.randmapp.api.API;
 import com.example.randmapp.model.Character;
 
+import java.sql.SQLOutput;
 import java.util.List;
 
 import retrofit2.Call;
@@ -19,22 +21,21 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static RecyclerView characterRecyclerView;
-    public static RecyclerView pageRecyclerView;
-    public static CharacterAdapter characterAdapter;
-    public static PageAdapter pageAdapter;
-    public static List<Character> listOfCharacter;
-    private Response<ResponseCharactersDTO> response;
+    private RecyclerView characterRecyclerView;
+    private RecyclerView pageRecyclerView;
+    private CharacterAdapter characterAdapter;
+    private PageAdapter pageAdapter;
+    public PageAdapter.OnPageClickListener onPageClickListener;
+    private List<Character> listOfCharacter;
+    private static int initialPage = 1;
 
-    //для данных с апи
-    private static API characterAPI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getDataFromAPI();
+        getDataFromAPI(initialPage);
         initRecyclerViewForCharacters();
         initRecyclerViewForPages();
     }
@@ -42,52 +43,65 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        //add clickListener for pageRecyclerView
+        onPageClickListener = new PageAdapter.OnPageClickListener() {
+            @Override
+            public void onPageClick(int page) {
+                try {
+                    getDataFromAPI(page);
+                } catch (Exception exception) {
+
+                }
+            }
+        };
     }
 
     private void initRecyclerViewForCharacters() {
         characterRecyclerView = findViewById(R.id.charactersRecyclerView);
-        LinearLayoutManager linearLayoutManagerForCharacters = new GridLayoutManager(this, 2);
-        characterRecyclerView.setLayoutManager(linearLayoutManagerForCharacters);
-        listOfCharacter = response.body().getCharacters();
-        //add character click listener
-        CharacterAdapter.OnCharacterClickListener onCharacterClickListener = new CharacterAdapter.OnCharacterClickListener() {
-            @Override
-            public void onCharacterClick(Character character) {
-                Toast.makeText(MainActivity.this, "Character" + character, Toast.LENGTH_SHORT).show();
-            }
-        };
-        characterAdapter = new CharacterAdapter(listOfCharacter, onCharacterClickListener);
-        characterRecyclerView.setAdapter(characterAdapter);
+        characterRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
     }
 
     private void initRecyclerViewForPages() {
         pageRecyclerView = findViewById(R.id.pagesRecyclerView);
-        LinearLayoutManager linearLayoutManagerFogPages = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        pageRecyclerView.setLayoutManager(linearLayoutManagerFogPages);
-        pageAdapter = new PageAdapter(response.body().getInfo().getPages());
-        pageRecyclerView.setAdapter(pageAdapter);
+        pageRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
     }
 
-    private void getDataFromAPI() {
-        characterAPI = RestService.getData();
-        characterAPI.getCharacters(1).enqueue(new Callback<ResponseCharactersDTO>() {
+    private void getDataFromAPI(int page) {
+        API characterAPI = RestService.getData();
+        characterAPI.getCharacters(page).enqueue(new Callback<ResponseCharactersDTO>() {
             @Override
             public void onResponse(Call<ResponseCharactersDTO> call, Response<ResponseCharactersDTO> response) {
                 if (response.isSuccessful()) {
-                    //characterRecyclerView.getAdapter().notifyDataSetChanged();
-                    setResponse(response);
+                    listOfCharacter = response.body().getCharacters();
+                    CharacterAdapter.OnCharacterClickListener onCharacterClickListener = new CharacterAdapter.OnCharacterClickListener() {
+                        @Override
+                        public void onCharacterClick(Character character) {
+                            try {
+                                Intent intent = new Intent(MainActivity.this, DescriptionActivity.class);
+                                intent.putExtra("characterImage", character.getImage());
+                                intent.putExtra("characterName", character.getName());
+                                intent.putExtra("characterLocation", character.getLocation().getName());
+                                intent.putExtra("characterSpecies", character.getSpecies());
+                                intent.putExtra("characterStatus", character.getStatus());
+                                startActivity(intent);
+                                Toast.makeText(MainActivity.this, "Character" + character.getName(), Toast.LENGTH_SHORT).show();
+                                finish();
+                            } catch (Exception exception) {
+
+                            }
+                        }
+                    };
+                    pageAdapter = new PageAdapter(response.body().getInfo().getPages(), onPageClickListener);
+                    pageRecyclerView.setAdapter(pageAdapter);
+                    characterAdapter = new CharacterAdapter(listOfCharacter, onCharacterClickListener);
+                    characterRecyclerView.setAdapter(characterAdapter);
+                } else {
+                    System.out.println("онРеспонс иначе");
                 }
             }
-
             @Override
             public void onFailure(Call<ResponseCharactersDTO> call, Throwable throwable) {
                 System.out.println("Throwable " + throwable);
             }
         });
-    }
-
-    private void setResponse(Response response) {
-        this.response = response;
     }
 }
