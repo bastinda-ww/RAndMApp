@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -19,6 +20,7 @@ public class DescriptionActivity extends AppCompatActivity {
     private TextView characterStatus;
     private Button toCharacterActivity;
     private Button toEpisodeActivity;
+    private String idOfCharacter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,8 @@ public class DescriptionActivity extends AppCompatActivity {
         characterLocation.setText("Location:     " + getIntent().getStringExtra("characterLocation"));
         characterSpecies.setText("Species:       " + getIntent().getStringExtra("characterSpecies"));
         characterStatus.setText("Status:          " + getIntent().getStringExtra("characterStatus"));
+        idOfCharacter = getIntent().getStringExtra("characterId");
+        Toast.makeText(this, "id " + idOfCharacter, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -60,7 +64,7 @@ public class DescriptionActivity extends AppCompatActivity {
             public void onClick(View view) {
                 try {
                     Intent intent = new Intent(DescriptionActivity.this, EpisodeActivity.class);
-//                    intent.putExtra("characterImage", character.getImage());
+                    intent.putExtra("characterId", idOfCharacter);
                     startActivity(intent);
                     finish();
                 } catch (Exception exception) {

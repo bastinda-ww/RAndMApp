@@ -14,6 +14,4 @@ public interface API {
 
     @GET("api/episode")
     Call<ResponseEpisodesDTO> getEpisodes(@Query("page") int numberOfPage);
-
-
 }

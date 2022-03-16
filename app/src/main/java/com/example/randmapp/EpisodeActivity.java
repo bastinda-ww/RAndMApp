@@ -28,39 +28,14 @@ public class EpisodeActivity extends AppCompatActivity {
     private RecyclerView episodeRecyclerView;
     private EpisodeAdapter episodeAdapter;
     private Button toCharacterActivity;
-    private List<Episode> episodeArrayList;
-    private API episodeAPI;
+    private List<Episode> episodeList;
+    private String searchString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_of_episodes);
         toCharacterActivity = findViewById(R.id.toCharacterActivity);
-
-        initRecyclerView();
-
-//        episodeAPI = RestService.getData();
-//        episodeAPI.getEpisodes(1).enqueue(new Callback<ResponseEpisodesDTO>() {
-//            @Override
-//            public void onResponse(Call<ResponseEpisodesDTO> call, Response<ResponseEpisodesDTO> response) {
-//                if (response.isSuccessful()) {
-//                    episodeArrayList = response.body().getEpisodes();
-//                    episodeAdapter = new EpisodeAdapter(episodeArrayList);
-//                    episodeRecyclerView.setAdapter(episodeAdapter);
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResponseEpisodesDTO> call, Throwable throwable) {
-//                System.out.println("Throwable " + throwable);
-//            }
-//        });
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
         toCharacterActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,11 +48,21 @@ public class EpisodeActivity extends AppCompatActivity {
                 }
             }
         });
+
+        getDataFromAPI(1);
+
+        initRecyclerView();
+        searchString = getIntent().getStringExtra("characterId");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search_menu, menu);
         MenuItem searchItem = menu.findItem(R.id.actionSearch);
@@ -95,21 +80,25 @@ public class EpisodeActivity extends AppCompatActivity {
             }
         });
         return true;
-
     }
 
     private void filter(String text) {
         // creating a new array list to filter our data.
         List<Episode> filteredlist = new ArrayList<>();
-
         // running a for loop to compare elements.
-        for (Episode item : episodeArrayList) {
+        for (Episode item : episodeList) {
+            List<String> characters = item.getCharacters();
             // checking if the entered string matched with any item of our recycler view.
-            if (item.getName().toLowerCase().contains(text.toLowerCase())) {
-                // if the item is matched we are
-                // adding it to our filtered list.
-                filteredlist.add(item);
+            for (int i = 0; i < characters.size(); i++) {
+                System.out.println("ЧАРАКТЕР " + characters.get(i));
+                System.out.println(text);
+                if (characters.get(i).contains(text)) {
+//                    if (item.getCharacters().toLowerCase().contains(text.toLowerCase())) {
+                    filteredlist.add(item);
+                }
             }
+
+//
         }
         if (filteredlist.isEmpty()) {
             // if no item is added in filtered list we are
@@ -125,25 +114,49 @@ public class EpisodeActivity extends AppCompatActivity {
     private void initRecyclerView() {
 
         // below line is to add data to our array list.
-//        episodeArrayList.add(new Episode(1, "20 minute's adventure", "10.10.2020"));
-//        episodeArrayList.add(new Episode(2, "first Ep.", "10.10.2022"));
-//        episodeArrayList.add(new Episode(3, "second Ep.", "10.03.2021"));
-//        episodeArrayList.add(new Episode(4, "Self Paced Course", "01.12.2020"));
-//        episodeArrayList.add(new Episode(5, "third Ep.", "08.10.2020"));
-//        episodeArrayList.add(new Episode(6, "The end of the Citadel", "31.01.2020"));
-//        episodeArrayList.add(new Episode(7, "my favorite Ep.", "31.01.2020"));
-//        episodeArrayList.add(new Episode(8, "DSA Self Paced Course", "10.12.2020"));
-//        episodeArrayList.add(new Episode(9, "DSA d Course", "10.12.2020"));
-//        episodeArrayList.add(new Episode(10, "DSA Self Paced Course", "10.12.2020"));
-//        episodeArrayList.add(new Episode(11, "D Selrse", "10.12.2020"));
-//        episodeArrayList.add(new Episode(12, "DSA SePaced Course", "10.12.2020"));
-//        episodeArrayList.add(new Episode(13, " Self Paced Course", "10.12.2020"));
-//        episodeArrayList.add(new Episode(14, "Paced Course", "10.12.2020"));
-//        episodeArrayList.add(new Episode(15, "Self", "10.12.2020"));
+//        episodeList.add(new Episode(1, "20 minute's adventure", "10.10.2020"));
+//        episodeList.add(new Episode(2, "first Ep.", "10.10.2022"));
+//        episodeList.add(new Episode(3, "second Ep.", "10.03.2021"));
+//        episodeList.add(new Episode(4, "Self Paced Course", "01.12.2020"));
+//        episodeList.add(new Episode(5, "third Ep.", "08.10.2020"));
+//        episodeList.add(new Episode(6, "The end of the Citadel", "31.01.2020"));
+//        episodeList.add(new Episode(7, "my favorite Ep.", "31.01.2020"));
+//        episodeList.add(new Episode(8, "DSA Self Paced Course", "10.12.2020"));
+//        episodeList.add(new Episode(9, "DSA d Course", "10.12.2020"));
+//        episodeList.add(new Episode(10, "DSA Self Paced Course", "10.12.2020"));
+//        episodeList.add(new Episode(11, "D Selrse", "10.12.2020"));
+//        episodeList.add(new Episode(12, "DSA SePaced Course", "10.12.2020"));
+//        episodeList.add(new Episode(13, " Self Paced Course", "10.12.2020"));
+//        episodeList.add(new Episode(14, "Paced Course", "10.12.2020"));
+//        episodeList.add(new Episode(15, "Self", "10.12.2020"));
 
         episodeRecyclerView = findViewById(R.id.episodeRecyclerView);
-        LinearLayoutManager manager = new LinearLayoutManager(this);
-        episodeRecyclerView.setHasFixedSize(true);
-        episodeRecyclerView.setLayoutManager(manager);
+//        episodeRecyclerView.setHasFixedSize(true);
+        episodeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    private void getDataFromAPI(int page) {
+        API episodeAPI = RestService.getData();
+        episodeAPI.getEpisodes(page).enqueue(new Callback<ResponseEpisodesDTO>() {
+            @Override
+            public void onResponse(Call<ResponseEpisodesDTO> call, Response<ResponseEpisodesDTO> response) {
+                if (response.isSuccessful()) {
+                    if (response.body().getEpisodes() != null) {
+//                        episodeList.addAll(response.body().getEpisodes());
+                        episodeList = response.body().getEpisodes();
+                        episodeAdapter = new EpisodeAdapter(episodeList);
+                        episodeRecyclerView.setAdapter(episodeAdapter);
+                        filter("character/" + searchString);
+                    }
+                } else {
+                    System.out.println("онРеспонс иначе");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseEpisodesDTO> call, Throwable throwable) {
+                System.out.println("Throwable " + throwable);
+            }
+        });
     }
 }

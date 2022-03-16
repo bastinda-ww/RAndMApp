@@ -17,14 +17,12 @@ public class EpisodeAdapter extends RecyclerView.Adapter<EpisodeAdapter.EpisodeV
 
     private List<Episode> listOfEpisode;
 
-
     public EpisodeAdapter(List<Episode> listOfEpisode) {
         this.listOfEpisode = listOfEpisode;
     }
 
     // method for filtering our recyclerview items.
     public void filterList(List<Episode> filterListOfEpisode) {
-
         listOfEpisode = filterListOfEpisode;
         // below line is to notify our adapter
         // as change in recycler view data.

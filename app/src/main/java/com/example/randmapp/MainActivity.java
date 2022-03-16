@@ -34,25 +34,34 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        try {
+            getDataFromAPI(initialPage);
+            initRecyclerViewForCharacters();
+            initRecyclerViewForPages();
+        } catch (Exception e) {
 
-        getDataFromAPI(initialPage);
-        initRecyclerViewForCharacters();
-        initRecyclerViewForPages();
+        }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        onPageClickListener = new PageAdapter.OnPageClickListener() {
-            @Override
-            public void onPageClick(int page) {
-                try {
-                    getDataFromAPI(page);
-                } catch (Exception exception) {
-
+        try {
+            onPageClickListener = new PageAdapter.OnPageClickListener() {
+                @Override
+                public void onPageClick(int page) {
+                    try {
+                        getDataFromAPI(page);
+                    } catch (Exception exception) {
+                        Toast.makeText(MainActivity.this, "exception 33", Toast.LENGTH_SHORT).show();
+//                        throw exception;
+                    }
                 }
-            }
-        };
+            };
+        } catch (Exception e) {
+            Toast.makeText(MainActivity.this, "exception 33", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private void initRecyclerViewForCharacters() {
@@ -82,8 +91,9 @@ public class MainActivity extends AppCompatActivity {
                                 intent.putExtra("characterLocation", character.getLocation().getName());
                                 intent.putExtra("characterSpecies", character.getSpecies());
                                 intent.putExtra("characterStatus", character.getStatus());
+                                intent.putExtra("characterId", String.valueOf(character.getId()));
                                 startActivity(intent);
-                                Toast.makeText(MainActivity.this, "Character" + character.getName(), Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(MainActivity.this, "Character" + character.getName(), Toast.LENGTH_SHORT).show();
                                 finish();
                             } catch (Exception exception) {
 
