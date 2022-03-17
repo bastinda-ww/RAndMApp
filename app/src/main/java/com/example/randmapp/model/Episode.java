@@ -42,23 +42,12 @@ public class Episode {
         return airDate;
     }
 
-    public void setAirDate(String airDate) {
-        this.airDate = airDate;
-    }
-
     public String getEpisode() {
         return episode;
-    }
-
-    public void setEpisode(String episode) {
-        this.episode = episode;
     }
 
     public List<String> getCharacters() {
         return characters;
     }
 
-    public void setCharacters(List<String> characters) {
-        this.characters = characters;
-    }
 }

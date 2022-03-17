@@ -18,15 +18,8 @@ public class ResponseCharactersDTO {
         return info;
     }
 
-    public void setInfo(Info info) {
-        this.info = info;
-    }
-
     public List<Character> getCharacters() {
         return results;
     }
 
-    public void setCharacters(List<Character> results) {
-        this.results = results;
-    }
 }

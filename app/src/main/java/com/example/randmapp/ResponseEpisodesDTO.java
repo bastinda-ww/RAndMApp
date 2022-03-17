@@ -18,15 +18,8 @@ public class ResponseEpisodesDTO {
         return info;
     }
 
-    public void setInfo(Info info) {
-        this.info = info;
-    }
-
     public List<Episode> getEpisodes() {
         return results;
     }
 
-    public void setEpisodes(List<Episode> results) {
-        this.results = results;
-    }
 }

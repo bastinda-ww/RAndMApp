@@ -21,18 +21,9 @@ public class EpisodeAdapter extends RecyclerView.Adapter<EpisodeAdapter.EpisodeV
         this.listOfEpisode = listOfEpisode;
     }
 
-    // method for filtering our recyclerview items.
-    public void filterList(List<Episode> filterListOfEpisode) {
-        listOfEpisode = filterListOfEpisode;
-        // below line is to notify our adapter
-        // as change in recycler view data.
-        notifyDataSetChanged();
-    }
-
     @NonNull
     @Override
     public EpisodeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // below line is to inflate our layout.
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_of_episode, parent, false);
         return (new EpisodeViewHolder(view));
     }

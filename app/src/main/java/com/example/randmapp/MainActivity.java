@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -75,11 +76,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getDataFromAPI(int page) {
+        final ProgressDialog progressDialog;
+        progressDialog = new ProgressDialog(MainActivity.this);
+        progressDialog.setMax(100);
+        progressDialog.setMessage("");
+        progressDialog.setTitle("Loading....");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        // show it
+        progressDialog.show();
+
+
         API characterAPI = RestService.getData();
         characterAPI.getCharacters(page).enqueue(new Callback<ResponseCharactersDTO>() {
             @Override
             public void onResponse(Call<ResponseCharactersDTO> call, Response<ResponseCharactersDTO> response) {
                 if (response.isSuccessful()) {
+                    progressDialog.dismiss();
                     listOfCharacter = response.body().getCharacters();
                     CharacterAdapter.OnCharacterClickListener onCharacterClickListener = new CharacterAdapter.OnCharacterClickListener() {
                         @Override
@@ -105,12 +117,16 @@ public class MainActivity extends AppCompatActivity {
                     characterAdapter = new CharacterAdapter(listOfCharacter, onCharacterClickListener);
                     characterRecyclerView.setAdapter(characterAdapter);
                 } else {
+                    Toast.makeText(MainActivity.this, "download is not successful", Toast.LENGTH_SHORT).show();
                     System.out.println("онРеспонс иначе");
                 }
             }
             @Override
             public void onFailure(Call<ResponseCharactersDTO> call, Throwable throwable) {
+//                progressDialog.dismiss();
+                Toast.makeText(MainActivity.this, "" + throwable.getMessage(), Toast.LENGTH_LONG).show();
                 System.out.println("Throwable " + throwable);
+                System.out.println("Throwable " + throwable.getMessage());
             }
         });
     }

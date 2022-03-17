@@ -2,6 +2,7 @@ package com.example.randmapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 public class DescriptionActivity extends AppCompatActivity {
@@ -32,13 +34,7 @@ public class DescriptionActivity extends AppCompatActivity {
         characterSpecies = findViewById(R.id.speciesOfCharacter);
         characterStatus = findViewById(R.id.statusOfCharacter);
 
-        Picasso.with(this).load(getIntent().getStringExtra("characterImage")).into(characterImage);
-        characterName.setText("Name:          " + getIntent().getStringExtra("characterName"));
-        characterLocation.setText("Location:     " + getIntent().getStringExtra("characterLocation"));
-        characterSpecies.setText("Species:       " + getIntent().getStringExtra("characterSpecies"));
-        characterStatus.setText("Status:          " + getIntent().getStringExtra("characterStatus"));
-        idOfCharacter = getIntent().getStringExtra("characterId");
-        Toast.makeText(this, "id " + idOfCharacter, Toast.LENGTH_SHORT).show();
+        loadingData();
     }
 
     @Override
@@ -72,5 +68,33 @@ public class DescriptionActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void loadingData() {
+
+        final ProgressDialog progressDialog;
+        progressDialog = new ProgressDialog(DescriptionActivity.this);
+        progressDialog.setMax(100);
+        progressDialog.setMessage("");
+        progressDialog.setTitle("Loading....");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.show();
+        Picasso.with(this).load(getIntent().getStringExtra("characterImage")).into(characterImage, new Callback() {
+            @Override
+            public void onSuccess() {
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onError() {
+//                progressDialog.dismiss();
+            }
+        });
+        characterName.setText("Name:          " + getIntent().getStringExtra("characterName"));
+        characterLocation.setText("Location:     " + getIntent().getStringExtra("characterLocation"));
+        characterSpecies.setText("Species:       " + getIntent().getStringExtra("characterSpecies"));
+        characterStatus.setText("Status:          " + getIntent().getStringExtra("characterStatus"));
+        idOfCharacter = getIntent().getStringExtra("characterId");
+        Toast.makeText(this, "id " + idOfCharacter, Toast.LENGTH_SHORT).show();
     }
 }

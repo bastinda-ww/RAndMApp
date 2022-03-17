@@ -15,27 +15,6 @@ public class PageAdapter extends RecyclerView.Adapter<PageAdapter.PageViewHolder
     private ViewGroup parent;
     private OnPageClickListener onPageClickListener;
 
-//    private final API characterAPI = RestService.getData();
-//    private void loadData(int page) {
-//        characterAPI.getData(page).enqueue(new Callback<ResponseCharactersDTO>() {
-//            @Override
-//            public void onResponse(Call<ResponseCharactersDTO> call, Response<ResponseCharactersDTO> response) {
-//                if (response.isSuccessful()) {
-//                    listOfCharacter = response.body().getResults();
-//                    characterAdapter = new CharacterAdapter(listOfCharacter);
-//                    characterRecyclerView.setAdapter(characterAdapter);
-//                    pageAdapter = new PageAdapter(10);
-//                    pageRecyclerView.setAdapter(pageAdapter);
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResponseCharactersDTO> call, Throwable t) {
-//                System.out.println("Throwable " + t);
-//            }
-//        });
-//    }
-
     public PageAdapter(int numberOfPage, OnPageClickListener onPageClickListener) {
         this.numberOfPage = numberOfPage;
         this.onPageClickListener = onPageClickListener;
